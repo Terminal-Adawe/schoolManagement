@@ -14,7 +14,7 @@
                 </div>
               <div class="row align-items-center">
                 
-                <div class="col-12">
+                <div class="col-12 table-responsive">
                   <input type="hidden" class="classname" value="{{ $data['averagescores'] }}">
                   <div id="curve_chart" style="width: 100%; height: 500px"></div>
 
@@ -50,8 +50,10 @@
             </div>
             <div class="card-body">
               <!-- Chart -->
-              <div class="chart">
-                <canvas id="chart-bars" class="chart-canvas"></canvas>
+              <div class="chart table-responsive">
+                <input type="hidden" class="highscoresubjects" value="{{ $data['highScoreSubjects'] }}">
+                <div id="highscoresubjects" style="width: 100%; height: 100%;"></div>
+                <!-- <canvas id="chart-bars" class="chart-canvas"></canvas> -->
               </div>
             </div>
           </div>
@@ -66,7 +68,7 @@
                   <h3 class="mb-0">Top performing Students</h3>
                 </div>
                 <div class="col text-right">
-                  <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                  <!-- <a href="#!" class="btn btn-sm btn-primary">See all</a> -->
                 </div>
               </div>
             </div>
@@ -75,83 +77,25 @@
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col">Page name</th>
-                    <th scope="col">Visitors</th>
-                    <th scope="col">Unique users</th>
-                    <th scope="col">Bounce rate</th>
+                    <th scope="col">Class</th>
+                    <th scope="col">Student</th>
+                    <th scope="col">Total Score</th>
                   </tr>
                 </thead>
                 <tbody>
+                  @foreach($data['studentPerformance'] as $student)
                   <tr>
                     <th scope="row">
-                      /argon/
+                      {{ optional($student)->class }}
                     </th>
                     <td>
-                      4,569
+                      {{ optional($student)->first_name }} {{ optional($student)->last_name }}
                     </td>
                     <td>
-                      340
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
+                      <i class="fas fa-arrow-up text-success mr-3"></i> {{ optional($student)->score_sum }}
                     </td>
                   </tr>
-                  <tr>
-                    <th scope="row">
-                      /argon/index.html
-                    </th>
-                    <td>
-                      3,985
-                    </td>
-                    <td>
-                      319
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-down text-warning mr-3"></i> 46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      /argon/charts.html
-                    </th>
-                    <td>
-                      3,513
-                    </td>
-                    <td>
-                      294
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-down text-warning mr-3"></i> 36,49%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      /argon/tables.html
-                    </th>
-                    <td>
-                      2,050
-                    </td>
-                    <td>
-                      147
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-up text-success mr-3"></i> 50,87%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      /argon/profile.html
-                    </th>
-                    <td>
-                      1,795
-                    </td>
-                    <td>
-                      190
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
-                    </td>
-                  </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>
@@ -162,10 +106,10 @@
             <div class="card-header border-0">
               <div class="row align-items-center">
                 <div class="col">
-                  <h3 class="mb-0">Social traffic</h3>
+                  <h3 class="mb-0">Improvements</h3>
                 </div>
                 <div class="col text-right">
-                  <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                  <!-- <a href="#!" class="btn btn-sm btn-primary">See all</a> -->
                 </div>
               </div>
             </div>
@@ -182,7 +126,7 @@
                 <tbody>
                   <tr>
                     <th scope="row">
-                      Facebook
+                      Integrated Science
                     </th>
                     <td>
                       1,480
@@ -200,7 +144,7 @@
                   </tr>
                   <tr>
                     <th scope="row">
-                      Facebook
+                      Agriculture
                     </th>
                     <td>
                       5,480
@@ -218,7 +162,7 @@
                   </tr>
                   <tr>
                     <th scope="row">
-                      Google
+                      Social Studies
                     </th>
                     <td>
                       4,807
@@ -236,7 +180,7 @@
                   </tr>
                   <tr>
                     <th scope="row">
-                      Instagram
+                      French
                     </th>
                     <td>
                       3,678

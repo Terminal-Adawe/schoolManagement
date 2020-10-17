@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use App\Student;
+use App\Academic;
+use App\TeacherStudentComment;
+use DB;
 
 
 class manageStudentsController extends Controller
@@ -38,5 +42,79 @@ class manageStudentsController extends Controller
         Student::insert($data);
 
         return redirect('/addstudents')->with('status', 'Student Added Successfully!');
+    }
+
+    
+    public function viewStudent(Request $request){
+      $studentid = $request->studentid;
+
+      $data['student'] = Student::where('students.id',$studentid)
+                          ->leftJoin('teacher_student_comments','students.id','student_id')
+                          ->select('*','students.id as studentid')
+                          ->first();
+
+      $data['comment'] = TeacherStudentComment::where('student_id',$studentid)
+                          ->get();
+
+      $data['favoriteSubject'] = Academic::select(DB::raw('SUM(exam_score) as top_score'),'subject_name')
+                          ->join('subjects','subjects.id','academics.subject_id')
+                          ->where('academics.student_id',$studentid)
+                          ->groupBy('subject_name')
+                          ->orderBy('top_score','DESC')
+                          ->first();
+
+      return view('dashboard.profile')->with('data',$data);
+    }
+
+    public function editStudentInformation(Request $request){
+      $studentid = $request->studentid;
+      $staffid = Auth::user()->id;
+
+      $data['student'] = Student::where('students.id',$studentid)
+                          ->leftJoin('teacher_student_comments','students.id','student_id')
+                          ->select('*','students.id as studentid')
+                          ->first();
+
+      $data['comment'] = TeacherStudentComment::where([['student_id',$studentid],['staff_id',$staffid]])
+                          ->first();
+
+      $data['favoriteSubject'] = Academic::select(DB::raw('SUM(exam_score) as top_score'),'subject_name')
+                          ->join('subjects','subjects.id','academics.subject_id')
+                          ->where('academics.student_id',$studentid)
+                          ->groupBy('subject_name')
+                          ->orderBy('top_score','DESC')
+                          ->first();
+
+      return view('dashboard.editStudentProfile')->with('data',$data);
+    }
+
+    public function saveStudentInformation(Request $request){
+      $email = $request->email;
+      $firstname = $request->firstname;
+      $lastname = $request->lastname;
+      $address = $request->address;
+      $city = $request->city;
+      $country = $request->country;
+      $description = $request->description;
+      $comment = $request->comment;
+      $course = $request->course;
+
+      $studentid = $request->studentid;
+      $staffid = Auth::user()->id;
+
+      $data=["first_name"=>$firstname,"last_name"=>$lastname,"address"=>$address,"city"=>$city,"country"=>$country,"description"=>$description];
+
+      Student::where('id',$studentid)->update($data);
+
+      $data2=["student_id"=>$studentid,"comment"=>$comment,"staff_id"=>$staffid];
+
+      if(TeacherStudentComment::where([['student_id',$studentid],['staff_id',$staffid]])->exists()){
+          TeacherStudentComment::where('student_id',$studentid)->update($data2);
+      } else {
+          TeacherStudentComment::insert($data2);
+      }
+      
+
+      return redirect()->route('viewstudent',['studentid'=>$studentid]);
     }
 }

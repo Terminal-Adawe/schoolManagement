@@ -18129,12 +18129,12 @@ a.text-darker:focus
 
     display: inline-flex;
 
-    width: 48px; 
-    height: 48px;
+    width: 80px; 
+    height: 80px;
 
     color: #fff;
     border-radius: .375rem;
-    background-color: #adb5bd;
+    /*background-color: #adb5bd;*/
 
     align-items: center;
     justify-content: center;

@@ -26,6 +26,25 @@ Route::get('/', 'dashboardController@dashboard')->name('home')->middleware('auth
 
 Auth::routes();
 
+Route::get('/documentation',function(){
+	$data['classes'] = Classes::where('active','=',1)->get();
+	$data['courses'] = Courses::where('active','=',1)->get();
+
+	$data['studentcount'] = Student::select(DB::raw('COUNT(id) as count'))
+    							->where('active','=',1)
+    							->first();
+
+    $data['staffcount'] = User::select(DB::raw('COUNT(id) as count'))
+    							->where('active','=',1)
+    							->first();
+
+    $data['subjectcount'] = Subject::select(DB::raw('COUNT(id) as count'))
+    							->where('active','=',1)
+    							->first();
+
+	return view('dashboard.docs.documentation')->with('data',$data);
+});
+
 Route::post('/action','adminController@action')->middleware('auth');
 
 Route::post('/savemapping','adminController@savemapping')->middleware('auth');
@@ -272,6 +291,13 @@ Route::get('/addtestscore',function(){
 
 	return view('dashboard.addTestScores')->with('data',$data);
 })->middleware('auth');
+
+
+Route::get('/view-student','manageStudentsController@viewStudent')->name('viewstudent')->middleware('auth');
+
+Route::get('/editStudentProfile','manageStudentsController@editStudentInformation')->middleware('auth');
+
+Route::post('/saveStudentInformation','manageStudentsController@saveStudentInformation')->middleware('auth');
 
 
 Route::get('/class-select','adminController@getSubjects')->middleware('auth');

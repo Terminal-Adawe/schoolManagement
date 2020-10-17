@@ -673,4 +673,74 @@ function returnedData(record, data){
       }
 
 
+
+      google.charts.setOnLoadCallback(highScoreSubjects);
+
+      function highScoreSubjects() {
+
+        console.log("chart values are "+$('.highscoresubjects').val());
+
+        var chartItems = $('.highscoresubjects').val();
+
+        var jsonChartItems = JSON.parse(chartItems);
+
+        console.log("JSON chart values are "+jsonChartItems);
+
+        const title = ["Subject","score"];
+
+        let subject_data = [];
+
+        subject_data.push(title);
+
+        $(jsonChartItems).each(function(){
+
+            console.log(this);
+
+            let eachSubject = [];
+
+            eachSubject.push(this.subject_name);
+
+            if(this.score_sum==null){
+              this.score_sum = 0;
+            } else {
+              this.score_sum = Number(this.score_sum);
+            }
+
+            // this.score_sum = this.score_sum/100;
+
+            eachSubject.push(this.score_sum);
+
+            // console.log(eachClass);
+
+            subject_data.push(eachSubject);
+
+            console.log(subject_data);
+
+
+          });
+
+
+        var data = google.visualization.arrayToDataTable(subject_data);
+
+      var view = new google.visualization.DataView(data);
+      // view.setColumns([0, 1,
+      //                  { calc: "stringify",
+      //                    sourceColumn: 1,
+      //                    type: "string",
+      //                    role: "annotation" },
+      //                  2]);
+
+      var options = {
+        title: "Top scoring subjects",
+        // width: 600,
+        // height: 400,
+        bar: {groupWidth: "5%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("highscoresubjects"));
+      chart.draw(view, options);
+      }
+
+
+
     });

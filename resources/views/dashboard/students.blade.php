@@ -56,7 +56,7 @@
                     <th scope="col">Address</th>
                     <th scope="col" class="sort" data-sort="completion">Last Position</th>
                     <th scope="col" class="sort" data-sort="completion">Current Position</th>
-                    <th scope="col"></th>
+                    <!-- <th scope="col"></th> -->
                   </tr>
                 </thead>
                 <tbody class="list">
@@ -64,12 +64,18 @@
                   <tr class="table-row">
                     <th scope="row">
                       <div class="media align-items-center">
-                        <a href="#" class="avatar rounded-circle mr-3">
-                          <img alt="Image placeholder" src="{{ Storage::url($student->avatar) }}">
-                        </a>
-                        <div class="media-body">
-                          <span class="name mb-0 text-sm">{{ $student->first_name }} {{ $student->last_name }}</span>
-                        </div>
+                        <form method="get" action="{{ url('/view-student') }}">
+                          @csrf
+                          <input type="hidden" name="studentid" value="{{ $student->id }}">
+                        <button type="submit" width="100%" height="100%" style="border: none; background: none;" class="row">
+                          <span class="avatar rounded-circle mr-3 col">
+                            <img alt="Image placeholder" src="{{ Storage::url($student->avatar) }}">
+                          </span>
+                          <div class="media-body col">
+                            <span class="name mb-0 text-sm my-auto">{{ $student->first_name }} {{ $student->last_name }}</span>
+                          </div>
+                        </button>
+                        </form>
                       </div>
                     </th>
                     <td>
@@ -98,7 +104,7 @@
                       </div>
                     </td>
                     
-                    <td class="text-right">
+                    <!-- <td class="text-right">
                       <div class="dropdown">
                         <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-ellipsis-v"></i>
@@ -109,7 +115,7 @@
                           <a class="dropdown-item" href="#">Something else here</a>
                         </div>
                       </div>
-                    </td>
+                    </td> -->
                   </tr>
                   @endforeach
                 </tbody>
