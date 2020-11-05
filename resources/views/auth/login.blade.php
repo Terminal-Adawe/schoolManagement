@@ -7,7 +7,7 @@
           <div class="row justify-content-center">
             <div class="col-xl-5 col-lg-6 col-md-8 px-5">
               <h1 class="text-white">Welcome!</h1>
-              <p class="text-lead text-white">Use these awesome forms to login or create new account in your project for free.</p>
+              <p class="text-lead text-white">Login with your username and password</p>
             </div>
           </div>
         </div>
@@ -26,14 +26,14 @@
             <div class="card-header bg-transparent pb-5">
               <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
               <div class="btn-wrapper text-center">
-                <a href="#" class="btn btn-neutral btn-icon">
+                <!-- <a href="#" class="btn btn-neutral btn-icon">
                   <span class="btn-inner--icon"><img src="../assets/img/icons/common/github.svg"></span>
                   <span class="btn-inner--text">Github</span>
                 </a>
                 <a href="#" class="btn btn-neutral btn-icon">
                   <span class="btn-inner--icon"><img src="../assets/img/icons/common/google.svg"></span>
                   <span class="btn-inner--text">Google</span>
-                </a>
+                </a> -->
               </div>
             </div>
             <div class="card-body px-lg-5 py-lg-5">
@@ -80,16 +80,16 @@
               </form>
             </div>
           </div>
-          <div class="row mt-3">
+          <!-- <div class="row mt-3">
             <div class="col-6">
                 @if (Route::has('password.request'))
                     <a class="text-light" href="{{ route('password.request') }}"><small>{{ __('Forgot Your Password?') }}</small></a>
                 @endif
             </div>
             <div class="col-6 text-right">
-              <a href="#" class="text-light"><small>Create new account</small></a>
+              <a href="{{ route('register') }}"" class="text-light"><small>Create new account</small></a>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
