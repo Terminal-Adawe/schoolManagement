@@ -2,6 +2,8 @@ select * from applicationProperties where `key` = 'gateway.api.service_down' and
 
 update applicationProperties set `value` = "false" where `key` = 'gateway.api.service_down' and microServiceModuleID = (select microServiceModuleID from microServiceModules where application = 'gateway-core-service') limit 1;
 
+select * from applicationProperties where `key` = 'gateway.api.service_downtime_status_code';
+
 insert into applicationProperties (`key`,`value`,`description`,microServiceModuleID,active,createdBy) values ('gateway.api.service_downtime_status_code',5050,'gateway.api.service_downtime_status_code',142,1,1);
 
 select * from applicationProperties where `key` = 'gateway.api.service_downtime_status_code' and microServiceModuleID = (select microServiceModuleID from microServiceModules where application = 'gateway-core-service');
@@ -107,4 +109,36 @@ Poderia experienciar perturbacoes intermitentes em nossa APP Movel. Os nossos Ca
 
 
 INSERT INTO `responseTemplates` (`languageID`, `statusCodeID`, `responseMessage`, `active`, `createdBy`, `modifiedBy`) VALUES ('2', (select statusCodeID from statusCodes where statusCode = '5054'), 'Banner#https://res.cloudinary.com/dflv8gwxt/image/upload/v1597174726/service%20banners/fr/9990_GRP_BANK_CARDS_SUMMER_2020_Skull_300x300px_P_EN_v3.jpg', '1', '1', '1');
+
+
+/* Activate Push Notification */
+
+
+/* API DB */
+UPDATE responseTemplates set responseMessage = "" where statuscodeid in (select statuscodeid from statusCodes where statuscode = '5052') and languageID = 1;
+
+/* French */
+UPDATE responseTemplates set responseMessage = "" where statuscodeid in (select statuscodeid from statusCodes where statuscode = '5052') and languageID = 2;
+
+/* Spanish */
+UPDATE responseTemplates set responseMessage = "" where statuscodeid in (select statuscodeid from statusCodes where statuscode = '5052') and languageID = 3;
+
+/* Portuguese */
+UPDATE responseTemplates set responseMessage = "" where statuscodeid in (select statuscodeid from statusCodes where statuscode = '5052') and languageID = 4;
+
+/* Wallet DB */
+/* Set the status code or message to display */
+update applicationProperties set `value` = "5052" where `key` = 'gateway.api.service_downtime_status_code' and microServiceModuleID = (select microServiceModuleID from microServiceModules where application = 'gateway-core-service') limit 1;
+
+/* set frequency of notification */
+update applicationProperties set `value` = "3" where `key` = 'gateway.api.notificationFrequency_count' and microServiceModuleID = (select microServiceModuleID from microServiceModules where application = 'gateway-core-service');
+
+/* set time */
+update applicationProperties set `value` = "21600000" where `key` = 'gateway.api.notificationInterval_milliseconds' and microServiceModuleID = (select microServiceModuleID from microServiceModules where application = 'gateway-core-service');
+
+/* Activate push Notification */
+update applicationProperties set `value` = "true" where `key` = 'gateway.api.service_down' and microServiceModuleID = (select microServiceModuleID from microServiceModules where application = 'gateway-core-service') limit 1;
+
+
+/* The above means the alert will show after every 6 hours for 3 times */
 

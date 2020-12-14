@@ -127,6 +127,16 @@
                         <input type="email" id="input-email" class="form-control" placeholder="jesse@example.com" value="{{ $data['student']->email }}" name="email">
                       </div>
                     </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="course">Course</label>
+                        <select class="form-control" id="course" name="course">
+                          @foreach($data['courses'] as $course)
+                            <option>{{ $course->course_title }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
                   </div>
                   <div class="row">
                     <div class="col-lg-6">
@@ -140,6 +150,16 @@
                         <label class="form-control-label" for="input-last-name">Last name</label>
                         <input type="text" id="input-last-name" class="form-control" placeholder="Last name" value="{{ $data['student']->last_name }}" name="lastname">
                       </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <label class="form-control-label" for="input-g-contact">Guardian's Contact</label>
+                      <input type="text" id="input-g-contact" class="form-control" placeholder="Guardian's contact" name="guardian_contact" value="{{ $data['student']->guardian_contact }}">
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="form-control-label" for="input-g-email">Guardian's Email</label>
+                      <input type="text" id="input-g-email" class="form-control" placeholder="Guardian's email address" name="guardian_email" value="{{ $data['student']->guardian_email }}">
                     </div>
                   </div>
                 </div>
@@ -168,6 +188,8 @@
                         <input type="text" id="input-country" class="form-control" placeholder="Country" value="{{ $data['student']->country }}" name="country">
                       </div>
                     </div>
+
+                    
                     <!-- <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-country">Postal code</label>
@@ -186,13 +208,27 @@
                   </div>
                 </div>
 
+                <div class="pl-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label">Hobbies</label>
+                    <textarea rows="4" class="form-control" placeholder="What are their hobbies?" name="hobbies">{{ $data['student']->hobbies }}</textarea>
+                  </div>
+                </div>
+
+                <div class="pl-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label">Medical History</label>
+                    <textarea rows="4" class="form-control" placeholder="Medical history of student" name="medicalhistory">{{ $data['student']->medical_history }}</textarea>
+                  </div>
+                </div>
+
                 <hr class="my-4" />
                 <!-- Description -->
                 <h6 class="heading-small text-muted mb-4">Teacher Comments</h6>
                 <div class="pl-lg-4">
                   <div class="form-group">
                     <label class="form-control-label">What do you think of this student?</label>
-                    <textarea rows="4" class="form-control" placeholder="A few words about you ..." name="comment">{{ optional($data['comment'])->comment }}</textarea>
+                    <textarea rows="4" class="form-control" placeholder="My comment on the student" name="comment">{{ optional($data['comment'])->comment }}</textarea>
                   </div>
                 </div>
             </div>

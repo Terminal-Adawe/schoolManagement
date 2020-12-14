@@ -114,33 +114,35 @@
             </div>
             <div class="card-body">
               <form>
-                <h6 class="heading-small text-muted mb-4">User information</h6>
+                <h6 class="heading-small text-muted mb-4">Student information</h6>
                 <div class="pl-lg-4">
                   <div class="row">
-                    <div class="col-lg-6">
+              <!--       <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-username">Username</label>
                         <input type="text" id="input-username" class="form-control" placeholder="Username" value="lucky.jesse">
                       </div>
-                    </div>
-                    <div class="col-lg-6">
+                    </div> -->
+                    <div class="col-lg-12">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-email">Email address</label>
-                        <input type="email" id="input-email" class="form-control" placeholder="jesse@example.com" value="{{ $data['student']->email }}">
+                        <label class="form-control-label">Email address</label>
+                        <p>{{ $data['student']->email }}</p>
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-first-name">First name</label>
-                        <input type="text" id="input-first-name" class="form-control" placeholder="First name" value="{{ $data['student']->first_name }}">
+                        <label class="form-control-label">First name</label>
+                        <p>{{ $data['student']->first_name }}</p>
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-last-name">Last name</label>
-                        <input type="text" id="input-last-name" class="form-control" placeholder="Last name" value="{{ $data['student']->last_name }}">
+                        <p>
+                          {{ $data['student']->last_name }}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -153,7 +155,9 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class="form-control-label" for="input-address">Address</label>
-                        <input id="input-address" class="form-control" placeholder="Home Address" value="{{ $data['student']->address }}" type="text">
+                        <p>
+                          {{ $data['student']->address }}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -161,20 +165,39 @@
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-city">City</label>
-                        <input type="text" id="input-city" class="form-control" placeholder="City" value="{{ $data['student']->city }}">
+                        <p>
+                          {{ $data['student']->city }}
+                        </p>
                       </div>
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-country">Country</label>
-                        <input type="text" id="input-country" class="form-control" placeholder="Country" value="{{ $data['student']->country }}">
+                        <p>
+                          {{ $data['student']->country }}
+                        </p>
                       </div>
                     </div>
-                    <div class="col-lg-4">
+                    <!-- <div class="col-lg-4">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-country">Postal code</label>
-                        <input type="number" id="input-postal-code" class="form-control" placeholder="Postal code">
+                        <label class="form-control-label" for="input-postal-code">Postal code</label>
+                        <p>
+                        </p>
                       </div>
+                    </div> -->
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <label class="form-control-label" for="input-g-contact">Guardian's Contact</label>
+                      <p>
+                        {{ $data['student']->guardian_contact }}
+                      </p>
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="form-control-label" for="input-g-email">Guardian's Email</label>
+                      <p>
+                        {{ $data['student']->guardian_email }}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -184,7 +207,21 @@
                 <div class="pl-lg-4">
                   <div class="form-group">
                     <label class="form-control-label">About Student</label>
-                    <textarea rows="4" class="form-control" placeholder="A few words about you ...">{{ $data['student']->description }}</textarea>
+                    <p>{{ $data['student']->description }}</p>
+                  </div>
+                </div>
+
+                <div class="pl-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label">Hobbies</label>
+                    <p>{{ $data['student']->hobbies }}</p>
+                  </div>
+                </div>
+
+                <div class="pl-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label">Medical History</label>
+                    <p>{{ $data['student']->medical_history }}</p>
                   </div>
                 </div>
 
@@ -195,7 +232,7 @@
                   <div class="form-group">
                     <label class="form-control-label">What do you think of this student?</label>
                     @foreach($data['comment'] as $comment)
-                      <textarea rows="4" class="form-control" placeholder="A few words about you ..." name="comment">{{ optional($comment)->comment }}</textarea>
+                      <p>{{ optional($comment)->comment }}</p>
                     @endforeach
                   </div>
                 </div>

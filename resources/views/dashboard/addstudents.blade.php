@@ -73,6 +73,34 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="guardian_contact" class="col-md-4 col-form-label text-md-right">{{ __('Guardian Contact') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="guardian_contact" type="text" class="form-control @error('guardian_contact') is-invalid @enderror" name="guardian_contact" value="{{ old('guardian_contact') }}" required autocomplete="guardian_contact" autofocus>
+
+                                @error('guardian_contact')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="guardian_contact" class="col-md-4 col-form-label text-md-right">{{ __('Guardian Email') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="guardian_email" type="text" class="form-control @error('guardian_email') is-invalid @enderror" name="guardian_email" value="{{ old('guardian_email') }}" required autocomplete="guardian_email" autofocus>
+
+                                @error('guardian_email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="image" class="col-md-4 col-form-label text-md-right">{{ __('Image') }}</label>
 
                             <div class="col-md-6">
@@ -111,6 +139,35 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label for="hobbies" class="col-md-4 col-form-label text-md-right">{{ __('Hobbies') }}</label>
+
+                            <div class="col-md-6">
+                                <textarea rows="4" id="hobbies" class="form-control @error('hobbies') is-invalid @enderror" placeholder="What are their hobbies?" name="hobbies"></textarea>
+
+                                @error('hobbies')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="medicalhistory" class="col-md-4 col-form-label text-md-right">{{ __('Medical History') }}</label>
+
+                            <div class="col-md-6">
+                                <textarea rows="4" id="medicalhistory" class="form-control @error('medicalhistory') is-invalid @enderror" placeholder="Medical history of student" name="medicalhistory"></textarea>
+
+                                @error('medicalhistory')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

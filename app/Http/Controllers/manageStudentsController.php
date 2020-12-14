@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Student;
 use App\Academic;
+use App\Courses;
 use App\TeacherStudentComment;
 use DB;
 
@@ -21,6 +22,10 @@ class manageStudentsController extends Controller
     	$address = $request->address;
     	$class = $request->class;
     	$course = $request->course;
+      $hobbies = $request->hobbies;
+      $medical_history = $request->medicalhistory;
+      $guardian_contact = $request->guardian_contact;
+      $guardian_email = $request->guardian_email;
     	$active = 0;
 
     	// if($request->hasFile('image')){
@@ -37,7 +42,7 @@ class manageStudentsController extends Controller
       
         // }
 
-        $data = ['first_name'=>$firstname,'last_name'=>$lastname,'email'=>$email,'avatar'=>$modifiedFilepath,'address'=>$address,'class'=>$class,'course'=>$course,'start_date'=>now(),'active'=>$active];
+        $data = ['first_name'=>$firstname,'last_name'=>$lastname,'email'=>$email,'avatar'=>$modifiedFilepath,'address'=>$address,'class'=>$class,'course'=>$course,"hobbies"=>$hobbies,'medical_history'=>$medical_history,'guardian_contact'=>$guardian_contact,'guardian_email'=>$guardian_email,'start_date'=>now(),'active'=>$active];
 
         Student::insert($data);
 
@@ -70,6 +75,8 @@ class manageStudentsController extends Controller
       $studentid = $request->studentid;
       $staffid = Auth::user()->id;
 
+      $data['courses'] = Courses::where('active','=',1)->get();
+
       $data['student'] = Student::where('students.id',$studentid)
                           ->leftJoin('teacher_student_comments','students.id','student_id')
                           ->select('*','students.id as studentid')
@@ -98,11 +105,15 @@ class manageStudentsController extends Controller
       $description = $request->description;
       $comment = $request->comment;
       $course = $request->course;
+      $hobbies = $request->hobbies;
+      $medical_history = $request->medicalhistory;
+      $guardian_contact = $request->guardian_contact;
+      $guardian_email = $request->guardian_email;
 
       $studentid = $request->studentid;
       $staffid = Auth::user()->id;
 
-      $data=["first_name"=>$firstname,"last_name"=>$lastname,"address"=>$address,"city"=>$city,"country"=>$country,"description"=>$description];
+      $data=["first_name"=>$firstname,"last_name"=>$lastname,"address"=>$address,"city"=>$city,"country"=>$country,"description"=>$description,"hobbies"=>$hobbies,"medical_history"=>$medical_history,"guardian_contact"=>$guardian_contact,"guardian_email"=>$guardian_email];
 
       Student::where('id',$studentid)->update($data);
 
