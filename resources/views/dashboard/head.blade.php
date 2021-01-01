@@ -18,8 +18,11 @@
   <!-- Page plugins -->
   <!-- Argon CSS -->
   <link rel="stylesheet" href="{{ asset('assets/css/argon.css?v=1.2.0') }}" type="text/css">
+  <link rel="stylesheet" href="{{ asset('calendar/calendar.css?v=1.2.0') }}" type="text/css">
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-</head>
 
+
+</head>
+@include('dashboard.calendar')
 <body>

@@ -138,7 +138,7 @@ function returnedData(record, data){
         $('.table-row').each(function(){
           var value = $(this).children('td').children('.subject-items').html();
 
-          // console.log("HTML is "+otherSelectedOption.trim());
+          console.log("HTML is "+selectedOption.trim()+" and looped option is "+value);
 
           if(selectedOption=="All"){
             $(this).show();
@@ -157,6 +157,17 @@ function returnedData(record, data){
     $(document).ready(function() {
 
       $('.alert').alert();
+
+      var now = new Date();
+      document.querySelector(".the-date").innerHTML = now.toDateString(); 
+
+      var day = ("0" + now.getDate()).slice(-2);
+      var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+      var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+      $('#from').val(today);
+      $('#to').val(today);
 
         $('.subjectsNotForBtn').off('click').on('click',subjectsNotFor);
 
@@ -741,6 +752,68 @@ function returnedData(record, data){
       chart.draw(view, options);
       }
 
+
+
+      $('.event-scheduler').submit(function(e){
+        e.preventDefault();
+        let proceed = 1;
+        const event = $('.schedule-event').val();
+        const from_date = $('#from').val();
+        const to_date = $('#to').val();
+        const eventtype = document.querySelector('#eventtype').value;
+
+        // code to validate 
+
+        console.log('event is '+event+"\nfrom date: "+from_date+"\nto date: "+to_date+"\nevent type "+eventtype);
+
+
+        if(proceed==1){
+          insertEvent(event,from_date,to_date,eventtype);
+          
+        } else {
+        }
+
+        console.log("event submitted");
+      });
+
+      function insertEvent(event,from,to,type){
+
+        // console.log('event is '+event+"\nfrom date: "+from+"\nto date: "+to);
+
+      jQuery.ajaxSetup({
+              headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+              }
+          });
+
+        var formData = {"event" : event,"from": from,"to": to,"type": type};
+
+          console.log('about to send '+formData.event+"\nfrom "+formData.from+"\nto "+to+"\nevent type "+type);
+
+          jQuery.ajax({
+            url: '/saveEvent',
+            type: 'POST',
+            data:formData,
+            dataType    : 'text',
+                error: function(xhr, desc, err) {
+            console.log(xhr);
+            console.log("Details: " + desc + "\nError:" + err);
+      }
+            })
+          .done(function(data) {
+            
+            //console.log("returned data is "+data);
+            $('.schedule-event').val("");
+            
+          });
+    }
+
+    $('.from').datepicker({
+      onSelect: function(dateText){
+
+        console.log("date is "+dateText);
+      }
+    });
 
 
     });

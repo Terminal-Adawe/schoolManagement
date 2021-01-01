@@ -12,6 +12,8 @@ use App\ClassSubject;
 use App\Test_academic;
 use App\Exam_academic;
 use App\Academic;
+use App\EventTypes;
+use App\Events;
 use DB;
 
 
@@ -58,10 +60,61 @@ class dashboardController extends Controller
     							->orderBy('score_sum','DESC')
     							->get();
 
+        $data['eventTypes'] = EventTypes::all();
+
     	
 
     	$data['message'] = "Student count is ".$data['studentcount'];
 
     	return view('dashboard.dashboard')->with('data',$data);
+    }
+
+
+
+    public function saveEvent(Request $request){
+        $event = $request->event;
+        $from = $request->from;
+        $to = $request->to;
+        $type = $request->type;
+
+        if($to > $from)
+        {
+
+        $diff = abs(strtotime($from) - strtotime($to));
+
+        $years = floor($diff / (365*60*60*24));
+
+        $months = floor(($diff - $years * 365*60*60*24) 
+                               / (30*60*60*24));  
+
+        $days = floor(($diff - $years * 365*60*60*24 -  
+             $months*30*60*60*24)/ (60*60*24)); 
+
+        
+            for ($i=0; $i < $days; $i++) { 
+            # code...
+            $data = ['event'=>$event,'event_type_id'=>$type,'event_date'=>$from];
+
+            // $from->modify('+1 day');
+            $from = date('Y-m-d H:i:s', strtotime($from . ' +1 day'));
+
+            Events::insert($data);
+        }
+        }
+        if($from == $to){
+            $data = ['event'=>$event,'event_type_id'=>$type,'event_date'=>$from];
+
+            Events::insert($data);
+        }
+        
+
+    }
+
+    public function getEvents(Request $request){
+        $data['events'] = Events::join('event_types','event_types.id','events.event_type_id')
+                ->select('events.event as eventName','event_type as calendar','indicating_color as color','event_date as date')
+                ->get();
+
+        return $data;
     }
 }

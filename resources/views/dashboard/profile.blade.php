@@ -113,7 +113,7 @@
               </div>
             </div>
             <div class="card-body">
-              <form>
+           
                 <h6 class="heading-small text-muted mb-4">Student information</h6>
                 <div class="pl-lg-4">
                   <div class="row">
@@ -236,7 +236,18 @@
                     @endforeach
                   </div>
                 </div>
-              </form>
+
+                <hr class="my-4" />
+
+              <div class="d-flex justify-content-end bg-secondary mb-3">
+                  <div class="p-2">
+                    <form method="get" action="{{ url('/print') }}">
+                          @csrf
+                          <input type="hidden" name="studentid" value="{{ $data['student']->studentid }}">
+                            <button type="submit" class="btn btn-danger">Print</button>
+                        </form>
+                    </div>
+                </div>
             </div>
           </div>
         </div>

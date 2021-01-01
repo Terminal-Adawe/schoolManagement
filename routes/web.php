@@ -9,6 +9,7 @@ use App\Student;
 use App\Test_academic;
 use App\Exam_academic;
 use App\classSubject;
+use App\EventTypes;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,8 @@ Route::get('/documentation',function(){
     							->where('active','=',1)
     							->first();
 
+    $data['eventTypes'] = EventTypes::all();
+
 	return view('dashboard.docs.documentation')->with('data',$data);
 });
 
@@ -52,6 +55,10 @@ Route::post('/savemapping','adminController@savemapping')->middleware('auth');
 Route::post('/saveTestScores','adminController@savetestscores')->middleware('auth');
 
 Route::post('/saveExamScores','adminController@saveexamscores')->middleware('auth');
+
+Route::post('/saveEvent','dashboardController@saveEvent')->middleware('auth');
+
+Route::post('/getEvents','dashboardController@getEvents')->middleware('auth');
 
 // Route::get('/home', 'HomeController@index')->name('home');
 
@@ -90,6 +97,8 @@ Route::get('/addstudents', function(){
     							->where('active','=',1)
     							->first();
 
+    $data['eventTypes'] = EventTypes::all();
+
 	return view('dashboard.addstudents')->with('data',$data);
 })->middleware('auth');
 
@@ -102,6 +111,8 @@ Route::get('/addclass', function(){
     							->where('active','=',1)
     							->first();
 
+    $data['eventTypes'] = EventTypes::all();
+
 	return view('dashboard.customizations.addclass')->with('data',$data);
 })->middleware('auth');
 
@@ -113,6 +124,8 @@ Route::get('/addcourse', function(){
     $data['staffcount'] = User::select(DB::raw('COUNT(id) as count'))
     							->where('active','=',1)
     							->first();
+
+    $data['eventTypes'] = EventTypes::all();
 
 	return view('dashboard.customizations.addcourse')->with('data',$data);
 })->middleware('auth');
@@ -128,6 +141,8 @@ Route::get('/addsubject', function(){
     							->where('active','=',1)
     							->first();
 
+    $data['eventTypes'] = EventTypes::all();
+
 	return view('dashboard.customizations.addsubject')->with('data',$data);
 })->middleware('auth');
 
@@ -140,6 +155,8 @@ Route::get('/mapsubjects', function(){
     $data['staffcount'] = User::select(DB::raw('COUNT(id) as count'))
     							->where('active','=',1)
     							->first();
+
+    $data['eventTypes'] = EventTypes::all();
 
 	$data['classes'] = Classes::where('active','=',1)
 						->get();
@@ -160,6 +177,8 @@ Route::get('/studentgrades', function(){
     							->where('active','=',1)
     							->first();
 
+    $data['eventTypes'] = EventTypes::all();
+
 	return view('dashboard.addGrades')->with('data',$data);
 })->middleware('auth');
 
@@ -179,6 +198,8 @@ Route::get('/approveaddclass', function(){
     $data['staffcount'] = User::select(DB::raw('COUNT(id) as count'))
     							->where('active','=',1)
     							->first();
+
+    $data['eventTypes'] = EventTypes::all();
 
 	return view('dashboard.approvals.approveaddclass')->with('data',$data);
 })->middleware('auth');
@@ -211,6 +232,8 @@ Route::get('/approveaddsubject', function(){
     							->where('active','=',1)
     							->first();
 
+    $data['eventTypes'] = EventTypes::all();
+
 	return view('dashboard.approvals.approveaddsubject')->with('data',$data);
 })->middleware('auth');
 
@@ -239,6 +262,8 @@ Route::get('/approveaddstudents',function(){
     							->where('active','=',1)
     							->first();
 
+    $data['eventTypes'] = EventTypes::all();
+
 	return view('dashboard.approvals.approveaddstudents')->with('data',$data);
 })->middleware('auth');
 
@@ -256,6 +281,8 @@ Route::get('/staff', function(){
     							->where('active','=',1)
     							->first();
 
+    $data['eventTypes'] = EventTypes::all();
+
 	return view('dashboard.staff')->with('data',$data);
 })->middleware('auth');
 
@@ -272,6 +299,8 @@ Route::get('/students', function(){
     $data['staffcount'] = User::select(DB::raw('COUNT(id) as count'))
     							->where('active','=',1)
     							->first();
+
+    $data['eventTypes'] = EventTypes::all();
 
 	return view('dashboard.students')->with('data',$data);
 })->middleware('auth');
@@ -294,6 +323,10 @@ Route::get('/addtestscore',function(){
 
 
 Route::get('/view-student','manageStudentsController@viewStudent')->name('viewstudent')->middleware('auth');
+
+Route::get('/print','manageStudentsController@print')->name('print')->middleware('auth');
+
+Route::post('/print-sheet','manageStudentsController@printsheet')->name('printsheet')->middleware('auth');
 
 Route::get('/editStudentProfile','manageStudentsController@editStudentInformation')->middleware('auth');
 

@@ -6,7 +6,11 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-              <h3 class="mb-0">Students</h3>
+              <div class="d-flex">
+                <div class="p-2 mr-auto"><h3 class="mb-0">Students</h3></div>
+                <div class="p-2"><form action="{{ url('/studentranks') }}" method="get"><input type="hidden" name="state" value="overall"><button type="submit" class="btn btn-primary btn-sm">overall</button></form></div>
+                <div class="p-2"><form action="{{ url('/studentranks') }}" method="get"><input type="hidden" name="state" value="subjects"><button type="submit" class="btn btn-primary btn-sm">by subjects</button></form></div>
+              </div>
             </div>
             <input type="hidden" class="subject-id" value="">
             <div class="table-responsive">
@@ -14,11 +18,11 @@
                     <div class="row mb-1">
                       <div class="col">
                         <div class="form-group">
-                              <select class="form-control term" id="sel1">
+                              <select class="form-control only-subject-select" id="sel1">
                                   @if(isset($data['subjects']))
                                       <option value="0">Select Subject</option>
                                     @foreach($data['subjects'] as $subject)
-                                      <option value="subject">{{ $subject->subject_name }}</option>
+                                      <option value="{{ $subject->subject_name }}">{{ $subject->subject_name }}</option>
                                     @endforeach
                                   @else
                                     <option>Select Class</option>
@@ -61,7 +65,13 @@
                 <thead class="thead-light">
                   <tr>
                     <th scope="col" class="sort" data-sort="name">Name</th>
-                    <th scope="col" class="sort" data-sort="budget">Class</th>
+                    <th scope="col" class="sort" data-sort="budget">
+                      @if($data['state']=='overall')
+                        Class
+                      @elseif($data['state']=='subjects')
+                        Subject
+                      @endif
+                    </th>
                     <th scope="col">Score /100</th>
                     <th scope="col">Rank</th>
                   </tr>
@@ -76,7 +86,7 @@
                       </div>
                     </th>
                     <td>
-                      <div class="d-flex align-items-center class-items">
+                      <div class="d-flex align-items-center class-items subject-items">
                         {{ $student->class }}
                       </div>
                     </td>

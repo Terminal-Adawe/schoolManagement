@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
+
+use Spatie\Browsershot\Browsershot;
+
 use App\Student;
 use App\Academic;
 use App\Courses;
 use App\TeacherStudentComment;
+use App\EventTypes;
 use DB;
 
 
@@ -68,7 +74,58 @@ class manageStudentsController extends Controller
                           ->orderBy('top_score','DESC')
                           ->first();
 
+      $data['eventTypes'] = EventTypes::all();
+
       return view('dashboard.profile')->with('data',$data);
+    }
+
+    public function print(Request $request){
+      $studentid = $request->studentid;
+
+      $data['student'] = Student::where('students.id',$studentid)
+                          ->leftJoin('teacher_student_comments','students.id','student_id')
+                          ->select('*','students.id as studentid')
+                          ->first();
+
+      $data['comment'] = TeacherStudentComment::where('student_id',$studentid)
+                          ->get();
+
+      $data['favoriteSubject'] = Academic::select(DB::raw('SUM(exam_score) as top_score'),'subject_name')
+                          ->join('subjects','subjects.id','academics.subject_id')
+                          ->where('academics.student_id',$studentid)
+                          ->groupBy('subject_name')
+                          ->orderBy('top_score','DESC')
+                          ->first();
+
+      $data['eventTypes'] = EventTypes::all();
+
+      return view('dashboard.print')->with('data',$data);
+    }
+
+    public function printsheet(Request $request){
+      $html = $request->thehtml;
+      $studentid = $request->studentid;
+
+      $objDateTime = date('Ymdis');
+      $file = $objDateTime.".pdf";
+      $filep = public_path()."/storage/students/".$file;
+      // $objDateTime->format('Ymdis');
+
+      Browsershot::html($html)
+        ->noSandbox()
+        ->format('a4')
+        // ->setIncludePath('$PATH:/tmp')
+        ->save($filep);
+        // ->pdf();
+
+
+
+    // return redirect()->route('print',['studentid'=>$studentid]);
+        $headers = [
+              'Content-Type' => 'application/pdf',
+           ];
+
+        return response()->download($filep, $file, $headers);
     }
 
     public function editStudentInformation(Request $request){
@@ -91,6 +148,7 @@ class manageStudentsController extends Controller
                           ->groupBy('subject_name')
                           ->orderBy('top_score','DESC')
                           ->first();
+
 
       return view('dashboard.editStudentProfile')->with('data',$data);
     }
