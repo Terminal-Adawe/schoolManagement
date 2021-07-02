@@ -117,6 +117,7 @@ class manageStudentsController extends Controller
         ->noSandbox()
         ->format('a4')
         // ->setIncludePath('$PATH:/tmp')
+        ->setNodeBinary('/home/bitnami/.nvm/versions/node/v16.4.1/bin/node')
         ->save($filep);
         // ->pdf();
 
