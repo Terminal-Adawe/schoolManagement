@@ -31,6 +31,8 @@ insert into applicationProperties (`key`,`value`,`description`,microServiceModul
 
 select * from statusCodes where statusCode like '505%';
 
+insert into statusCodes (description,scenario,statusCode,active,createdBy,modifiedBy) values ('Marketing Banner','Marketing Banner',5054,1,1,1);
+
 
 
 ---- Update response templates to change banner image ----
@@ -90,25 +92,28 @@ Vous pourriez noter des perturbations intermittentes en utilisant notre APPLI Mo
 
 
 
-update responseTemplates set responseMessage = "Dear Valued Client,
-You may experience intermittent disruptions with our Mobile APP. Our Cards, USSD, Ecobank Online and ATMs are however available for transactions. We apologize for the inconvenience.#https://res.cloudinary.com/dflv8gwxt/image/upload/v1597174683/service%20banners/en/9990_GRP_BANK_CARDS_SUMMER_2020_Skull_300x300px_P_EN_v3.jpg" where responseID = 124;
+update responseTemplates set responseMessage = "Banner#https://res.cloudinary.com/dvqjdb723/image/upload/v1615974442/artworkforinappbanner/Banner_EN_V2_03_wmzaji.png" where responseID = 124;
 
 
-update responseTemplates set responseMessage = "Cher Precieux Client,
-Vous pourriez noter des perturbations intermittentes en utilisant notre APPLI Mobile. Nos Cartes, Code USSD, Plateformes Ecobank Online et GAB sont disponibles pour vos transactions. Nous regrettons tout desagrement cause.#https://res.cloudinary.com/dflv8gwxt/image/upload/v1597174726/service%20banners/fr/9990_GRP_BANK_CARDS_SUMMER_2020_Skull_300x300px_P_EN_v3.jpg" where responseID = 135;
+update responseTemplates set responseMessage = "Banner#https://res.cloudinary.com/dvqjdb723/image/upload/v1615974442/artworkforinappbanner/Banner_FR_V3_03_e0osfj.png" where statuscodeid in (select statusCodeID from statusCodes where statusCode = '5054') and languageID = 2;
 
 
 update responseTemplates set responseMessage = "Dear Valued Client,
 You may experience intermittent disruptions with our Mobile APP. Our Cards, USSD, Ecobank Online and ATMs are however available for transactions. We apologize for the inconvenience.#https://res.cloudinary.com/dflv8gwxt/image/upload/v1597174708/service%20banners/es/9990_GRP_BANK_CARDS_SUMMER_2020_Skull_300x300px_P_EN_v3.jpg" where responseID = 136;
 
-update responseTemplates set responseMessage = "Estimado Cliente,
-Poderia experienciar perturbacoes intermitentes em nossa APP Movel. Os nossos Cartoes, Codigo USSD, Plataformas Ecobank Online e ATM estão disponiveis para as vossas transacoes. Lamentamos o inconveniente.#https://res.cloudinary.com/dflv8gwxt/image/upload/v1597174808/service%20banners/pt/9990_GRP_BANK_CARDS_SUMMER_2020_Skull_300x300px_P_EN_v3.jpg" where responseID = 137;
+update responseTemplates set responseMessage = "Banner#https://res.cloudinary.com/dvqjdb723/image/upload/v1615974442/artworkforinappbanner/Banner_PT_V2_03_yub7zt.png" where responseID = 137;
 
 
 
 
 
-INSERT INTO `responseTemplates` (`languageID`, `statusCodeID`, `responseMessage`, `active`, `createdBy`, `modifiedBy`) VALUES ('2', (select statusCodeID from statusCodes where statusCode = '5054'), 'Banner#https://res.cloudinary.com/dflv8gwxt/image/upload/v1597174726/service%20banners/fr/9990_GRP_BANK_CARDS_SUMMER_2020_Skull_300x300px_P_EN_v3.jpg', '1', '1', '1');
+INSERT INTO `responseTemplates` (`languageID`, `statusCodeID`, `responseMessage`, `active`, `createdBy`, `modifiedBy`) VALUES ('1', (select statusCodeID from statusCodes where statusCode = '5054'), 'Banner#https://res.cloudinary.com/dvqjdb723/image/upload/v1615974442/artworkforinappbanner/Banner_EN_V2_03_wmzaji.png', '1', '1', '1');
+
+INSERT INTO `responseTemplates` (`languageID`, `statusCodeID`, `responseMessage`, `active`, `createdBy`, `modifiedBy`) VALUES ('2', (select statusCodeID from statusCodes where statusCode = '5054'), 'Banner#https://res.cloudinary.com/dvqjdb723/image/upload/v1615974442/artworkforinappbanner/Banner_EN_V2_03_wmzaji.png', '1', '1', '1');
+
+INSERT INTO `responseTemplates` (`languageID`, `statusCodeID`, `responseMessage`, `active`, `createdBy`, `modifiedBy`) VALUES ('3', (select statusCodeID from statusCodes where statusCode = '5054'), 'Banner#https://res.cloudinary.com/dvqjdb723/image/upload/v1615974441/artworkforinappbanner/Banner_ES_V2_03_wavaec.png', '1', '1', '1');
+
+INSERT INTO `responseTemplates` (`languageID`, `statusCodeID`, `responseMessage`, `active`, `createdBy`, `modifiedBy`) VALUES ('4', (select statusCodeID from statusCodes where statusCode = '5054'), 'Banner#https://res.cloudinary.com/dvqjdb723/image/upload/v1615974442/artworkforinappbanner/Banner_PT_V2_03_yub7zt.png', '1', '1', '1');
 
 
 /* Activate Push Notification */

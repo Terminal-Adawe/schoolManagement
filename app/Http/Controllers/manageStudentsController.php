@@ -102,6 +102,8 @@ class manageStudentsController extends Controller
       return view('dashboard.print')->with('data',$data);
     }
 
+    
+
     public function printsheet(Request $request){
       $html = $request->thehtml;
       $studentid = $request->studentid;
@@ -128,6 +130,8 @@ class manageStudentsController extends Controller
         return response()->download($filep, $file, $headers);
     }
 
+
+
     public function editStudentInformation(Request $request){
       $studentid = $request->studentid;
       $staffid = Auth::user()->id;
@@ -148,6 +152,8 @@ class manageStudentsController extends Controller
                           ->groupBy('subject_name')
                           ->orderBy('top_score','DESC')
                           ->first();
+
+      $data['eventTypes'] = EventTypes::all();
 
 
       return view('dashboard.editStudentProfile')->with('data',$data);

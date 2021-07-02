@@ -78,6 +78,8 @@ Route::get('/registerstaff', function(){
     							->where('active','=',1)
     							->first();
 
+    $data['eventTypes'] = EventTypes::all();
+
 	return view('dashboard.register')->with('data',$data);
 })->middleware('auth');
 
@@ -215,6 +217,8 @@ Route::get('/approveaddcourse', function(){
     							->where('active','=',1)
     							->first();
 
+    $data['eventTypes'] = EventTypes::all();
+
 	return view('dashboard.approvals.approveaddcourse')->with('data',$data);
 })->middleware('auth');
 
@@ -247,6 +251,8 @@ Route::get('/approveaddstaff',function(){
     $data['staffcount'] = User::select(DB::raw('COUNT(id) as count'))
     							->where('active','=',1)
     							->first();
+
+    $data['eventTypes'] = EventTypes::all();
 
 	return view('dashboard.approvals.approveaddstaff')->with('data',$data);
 })->middleware('auth');
@@ -317,6 +323,8 @@ Route::get('/addtestscore',function(){
     $data['staffcount'] = User::select(DB::raw('COUNT(id) as count'))
     							->where('active','=',1)
     							->first();
+
+    $data['eventTypes'] = EventTypes::all();
 
 	return view('dashboard.addTestScores')->with('data',$data);
 })->middleware('auth');
